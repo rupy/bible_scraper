@@ -4,7 +4,7 @@ require 'yaml'
 class WebFetcher
 
 	RETRY_TIME = 3
-	TARGETS = ["old", 'new']
+	TITLES = ["old", 'new']
 
 	def initialize(config)
 		# ロガーの初期化
@@ -35,9 +35,9 @@ class WebFetcher
 	end
 
 	def read_url_list(title_id)
-		target = TARGETS[title_id]
+		title = TITLES[title_id]
 		url_list_dir = @config['structure']['url_list_dir']
-		target_file_path = "#{url_list_dir}/#{target}.txt"
+		target_file_path = "#{url_list_dir}/#{title}.txt"
 		target_urls = open(target_file_path).read.split
 		target_urls
 	end
@@ -61,9 +61,9 @@ class WebFetcher
 	end
 
 	def get_web_page_file_name(title_id, book_id)
-		target = TARGETS[title_id]
+		title = TITLES[title_id]
 		web_page_dir = @config['structure']['web_page_dir']
-		file_name = sprintf("#{web_page_dir}/%s/%02d.xml", target, book_id)
+		file_name = sprintf("#{web_page_dir}/%s/%02d.xml", title, book_id)
 		file_name
 	end
 
@@ -71,12 +71,12 @@ class WebFetcher
 
 		@log.info("start fetch web pages")
 
-		TARGETS.each_with_index do |target, title_id|
+		TITLES.each_with_index do |title, title_id|
 
 			target_urls = read_url_list title_id
 			target_urls.each_with_index do |url, book_id|
 
-				@log.info("fetch target: #{target}, #{book_id}")
+				@log.info("fetch target: #{title}, #{book_id}")
 
 				file_name = get_web_page_file_name title_id, book_id
 				if File.exist?(file_name) && !overwrite_flag

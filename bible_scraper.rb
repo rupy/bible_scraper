@@ -6,7 +6,7 @@ require './data_output'
 
 class BibleScraper
 
-	TARGETS = ["old", 'new']
+	TITLES = ["old", 'new']
 	def initialize(title_id = 0)
 
 		# ロガーの初期化
@@ -20,15 +20,15 @@ class BibleScraper
 		@data_output = DataOutput.new @config
 	end
 
-	def scrape_scriptures
+	def scrape_scriptures(overwrite_flag = false)
 
 		@log.info("start parsing")
 
-		@web_fetcher.fetch_and_store_web_pages
+		@web_fetcher.fetch_and_store_web_pages overwrite_flag
 
 		all_infos = []
 		# titleに対して
-		TARGETS.each_with_index do |target, title_id|
+		TITLES.each_with_index do |title, title_id|
 
 			all_infos_in_book = []
 
