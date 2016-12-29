@@ -1,5 +1,4 @@
 require 'open-uri'
-require 'yaml'
 
 class WebFetcher
 

@@ -1,8 +1,8 @@
 require 'logger'
-require 'kconv'
 require './web_fetcher'
 require './bible_page'
 require './data_output'
+require 'yaml'
 
 class BibleScraper
 
